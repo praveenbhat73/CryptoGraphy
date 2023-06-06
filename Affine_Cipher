@@ -1,18 +1,17 @@
-
-
 #include <iostream>
 #include <string>
 
-std::string affine_encrypt(const std::string& plain_text, int a, int b) {
-    std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    std::string encrypted_text = "";
+using namespace std;
+
+string affine_encrypt(const string& plain_text, int a, int b) {
+    string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    string encrypted_text;
 
     for (char ch : plain_text) {
         if (isalpha(ch)) {
             int index = alphabet.find(toupper(ch));
             int encrypted_index = (a * index + b) % 26;
-            char encrypted_char = alphabet[encrypted_index];
-            encrypted_text += encrypted_char;
+            encrypted_text += alphabet[encrypted_index];
         } else {
             encrypted_text += ch;
         }
@@ -21,9 +20,9 @@ std::string affine_encrypt(const std::string& plain_text, int a, int b) {
     return encrypted_text;
 }
 
-std::string affine_decrypt(const std::string& cipher_text, int a, int b) {
-    std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    std::string decrypted_text = "";
+string affine_decrypt(const string& cipher_text, int a, int b) {
+    string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    string decrypted_text;
     int a_inverse = 0;
 
     for (int i = 0; i < 26; i++) {
@@ -37,8 +36,7 @@ std::string affine_decrypt(const std::string& cipher_text, int a, int b) {
         if (isalpha(ch)) {
             int index = alphabet.find(toupper(ch));
             int decrypted_index = (a_inverse * (index - b + 26)) % 26;
-            char decrypted_char = alphabet[decrypted_index];
-            decrypted_text += decrypted_char;
+            decrypted_text += alphabet[decrypted_index];
         } else {
             decrypted_text += ch;
         }
@@ -48,21 +46,21 @@ std::string affine_decrypt(const std::string& cipher_text, int a, int b) {
 }
 
 int main() {
-    std::string plain_text;
+    string plain_text;
     int a, b;
 
-    std::cout << "Enter the plain text: ";
-    std::getline(std::cin, plain_text);
-    std::cout << "Enter the multiplicative value: ";
-    std::cin >> a;
-    std::cout << "Enter the additive value: ";
-    std::cin >> b;
+    cout << "Enter the plain text: ";
+    getline(cin, plain_text);
+    cout << "Enter the multiplicative value: ";
+    cin >> a;
+    cout << "Enter the additive value: ";
+    cin >> b;
 
-    std::string encrypted_text = affine_encrypt(plain_text, a, b);
-    std::cout << "Encrypted text: " << encrypted_text << std::endl;
+    string encrypted_text = affine_encrypt(plain_text, a, b);
+    cout << "Encrypted text: " << encrypted_text << endl;
 
-    std::string decrypted_text = affine_decrypt(encrypted_text, a, b);
-    std::cout << "Decrypted text: " << decrypted_text << std::endl;
+    string decrypted_text = affine_decrypt(encrypted_text, a, b);
+    cout << "Decrypted text: " << decrypted_text << endl;
 
     return 0;
 }
